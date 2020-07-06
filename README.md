@@ -1,5 +1,7 @@
 # REHaB
 ![logo](public/assets/graphics/REHaB_Icon.png)
+
+
 Group midterm  project for Code Fellows Advancerd Javascript
 
 ## Live deployment
@@ -248,7 +250,7 @@ If you would like to contribute to this project, open up an issue on the project
 
 ## Acknowledgements
 
-This section goes out to Brooke Riggio, Jacob Knaack and Alistair, our biggest supporter.
+This section goes out to Brooke Riggio, Jacob Knaack and Alistair, our biggest supporters.
 
 [Return to the top](#Table-of-Contents)
 
