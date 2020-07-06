@@ -97,7 +97,7 @@ This project is licensed under the free MIT license. As such, if you are interes
     - A text editor ([VSCode](https://code.visualstudio.com/download) is recommended)
     - A web browser (We recommend using Google Chrome)
     - A desire to build cools stuff!
-2. Clone repo from GitHub [here](https://github.com/quarantine-survival-kit/301d61-class-project).
+2. Clone repo from GitHub [here](https://github.com/Racial-Equity-Habit-Builder/REHB).
     - On the GitHub repo page, click the `clone or download` button and copy the provided url.
     - In your command-line, or CLI, run this command: `git clone <url goes here>`
 3. Inside of the repo on your local machine, install the necessary dependencies and libraries:
@@ -170,7 +170,7 @@ See the attached [CHANGELOG.md](INSERT HERE) file.
 
 This diagram is a visual representation of the data structure for this project.
 
-![img](INSERT HERE)
+![img](/docs/REHaB-UML.pdf)
 
 
 [Return to the top](#Table-of-Contents)
@@ -226,7 +226,7 @@ Possible future implementation of:
 
 ## Contributing
 
-If you would like to contribute to this project, open up an issue on the project's [GitHub](https://github.com/quarantine-survival-kit/301d61-class-project).
+If you would like to contribute to this project, open up an issue on the project's [GitHub](https://github.com/Racial-Equity-Habit-Builder/REHB).
 - Use the `bug` flag for any problems using the application.
 - Use the `enhancement` flag if you have a recommendation on something to improve
 - Use the `question` flag if you simply have questions about the development of this project.
