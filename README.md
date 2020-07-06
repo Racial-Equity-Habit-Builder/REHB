@@ -3,7 +3,7 @@
 Group midterm  project for Code Fellows Advancerd Javascript
 
 ## Live deployment
-Check out our app out in the wild [here]()! 
+Check out our app out in the wild [here](https://rehab-cf.herokuapp.com/)! 
 
 <hr>
 
