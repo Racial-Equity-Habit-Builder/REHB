@@ -4,7 +4,7 @@
   "description": "![logo](public/assets/graphics/REHaB_Icon.png) Group midterm  project for Code Fellows Advancerd Javascript",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
     "test": "jest --verbose -- coverage"
   },
   "repository": {
