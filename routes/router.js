@@ -8,7 +8,7 @@
 const express = require('express');
 const router = express.Router();
 
-const getModel = require('../middleware/getModel.js');
+const getModel = require('../middleware/getModel');
 
 router.param('model', getModel);
 

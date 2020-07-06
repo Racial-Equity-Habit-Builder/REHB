@@ -5,7 +5,7 @@
  */
 
 const schema = require('./resource-schema.js');
-const Model = require('../mongooose-model.js');
+const Model = require('../mongoose-model.js');
 
 class Resource extends Model {
   constructor() {

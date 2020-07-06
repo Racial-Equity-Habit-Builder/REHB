@@ -10,8 +10,8 @@
   * @returns {object}
   */
 
-const ResourceModel = require('./middleware/models/resource/resource-model.js');
-const UserModel = require('./middleware/models/user/User-model.js');
+const ResourceModel = require('./models/resource/resource-model');
+const UserModel = require('./models/user/user-model.js');
 
 function getModel(request, response, next){
   let model = request.params.model;
