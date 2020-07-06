@@ -1,13 +1,13 @@
 'use strict';
 /**
- * Resource class
- * @module Resource
+ * User class
+ * @module User
  */
 
 const schema = require('./user-schema.js');
 const Model = require('../mongoose-model.js');
 
-class Resource extends Model {
+class User extends Model {
   constructor() {
     super(schema);
     this.streak = 0;
@@ -17,4 +17,4 @@ class Resource extends Model {
   }
 }
 
-module.exports = Resource;
+module.exports = User;
