@@ -1,0 +1,118 @@
+/** 
+font-family: 'Montserrat', sans-serif;
+font-family: 'Oswald', sans-serif;
+*/
+
+body {
+  background-color: var(--snow);
+}
+
+#wrapper {
+  background:linear-gradient(transparent, 80%, var(--snow)), url('../assets/graphics/BrainBackground.svg');
+  background-position-x: -100px;
+  background-size: 250px;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 50px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center ;
+}
+h1{
+  font-family: 'Montserrat', sans-serif;
+font-size: 58pt;
+color: var(--onyx);
+margin:10px;
+}
+
+#subtitle{
+  padding: 10px;
+  font-size: 36pt;
+  color: var(--red);
+}
+
+h2{
+  font-family: 'Oswald', sans-serif;
+  color: var(--onyx);
+  padding: 25px;
+  font-size: 28pt;
+}
+
+h3{
+  font-family: 'Oswald', sans-serif;
+  color: var(--onyx);
+}
+
+p {
+  font-family: 'Oswald', 'sans-serif';
+  margin-top: 10px;
+  padding: 10px;
+}
+
+#subtext{
+  display: flex;
+  margin-right: -150px;
+}
+
+#logo {
+  width: 100px;
+  margin: 10px;
+}
+
+#cf {
+  width: 50px;
+  padding-left: 4px;
+
+}
+
+#aboutus{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.team {
+ width: 30%;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+justify-content: baseline;
+}
+
+.team h1 {
+  text-align: center;
+}
+
+
+.headshot{
+  border-radius: 10%;
+  width: 100px;
+}
+footer{
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+
+  background:linear-gradient( var(--snow), transparent), url('../assets/graphics/BrainBackground.svg');
+  background-position-x: -100px;
+  background-size: 250px;
+}
+
+li{
+  display: inline-block;
+  padding: 5px;
+}
+
+#codefellows{
+  width:44px;
+}
