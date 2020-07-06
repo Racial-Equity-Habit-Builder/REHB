@@ -1,0 +1,12 @@
+@import './reset.css';
+@import './base.css';
+@import './layout.css';
+@import './modules.css';
+
+:root {
+  --onyx: hsla(216, 8%, 25%, 1);
+  --aliceblue: #d8e2f2;
+  --red: #cc594c;
+  --raisin-black: hsla(210, 5%, 15%, 1);
+  --snow: hsla(340, 2%, 100%, 1);
+}
