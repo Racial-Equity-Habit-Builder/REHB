@@ -30,7 +30,7 @@
     "jsdoc": "^3.6.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.21",
-    "supertest": "^4.0.2"
+    "supertest": "^4.0.2",
     "twilio": "^3.47.0"
 
   }
