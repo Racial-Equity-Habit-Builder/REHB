@@ -170,7 +170,7 @@ See the attached [CHANGELOG.md](INSERT HERE) file.
 
 This diagram is a visual representation of the data structure for this project.
 
-![img](../docs/REHaB-UML.pdf)
+![img](docs/REHaB-UML.pdf)
 
 
 [Return to the top](#Table-of-Contents)
