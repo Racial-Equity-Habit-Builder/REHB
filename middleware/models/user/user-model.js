@@ -7,6 +7,7 @@
 const schema = require('./user-schema.js');
 const Model = require('../mongoose-model.js');
 
+<<<<<<< HEAD
 class Resource extends Model {
     constructor() {
         super(schema);
@@ -51,6 +52,21 @@ class Resource extends Model {
         const opts = {new : true};
         this.schema.findOneAndUpdate(_id, update, opts);
     }
+=======
+class Users extends Model {
+  constructor() {
+    super(schema);
+
+  }
+
+  incrementStreak(_id){
+    let update = {streak: 1}; 
+    const opts = {new : true};
+
+    this.schema.findOneAndUpdate(_id, update, opts);
+  }
+
+>>>>>>> 03cbeb5464ccb83dabd3f8c8adaeb0fabd217deb
 }
 
-module.exports = User;
+module.exports = Users;
