@@ -1,7 +1,7 @@
 'use strict';
 /**
- * Resource class
- * @module Users
+ * User class
+ * @module User
  */
 
 const schema = require('./user-schema.js');
