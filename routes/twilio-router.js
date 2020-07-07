@@ -28,8 +28,8 @@ async function handleText(req, res) {
     user.create(userDetails)
     twiml.message('Thanks for signing up');
 
-    let action = await resource.getOne()
-      console.log('this is the action.url:', action.url);
+    let action = await resource.getRandom()
+    console.log('this is the action.url:', action.url);
     twiml.message(action.url);
   }
 

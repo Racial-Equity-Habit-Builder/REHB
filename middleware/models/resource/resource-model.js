@@ -14,13 +14,12 @@ class Resource extends Model {
   }
 
   async getRandom(){
-    let count = await this.count();
-    let random = Math.floor(Math.random()*count);
-    let resource = await this.findOne().skip(random);
+    let resources = await this.get();
+    let count = await resources.count;
+    let random = await Math.floor(Math.random()*count);
+    let resource = await this.schema.findOne().skip(random);
     return resource;
-
   }
 }
-
 
 module.exports = Resource;
