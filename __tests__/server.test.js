@@ -1,34 +1,39 @@
 'use strict';
 
 require('dotenv').config();
-const supergoose = require('cf-supergoose');
-const server = require('../lib/server');
-let request = require('supertest')(server.server);
 
-jest.spyOn(global.console, 'log');
+const {server} = require('../lib/server');
+const supergoose = require('@code-fellows/supergoose')
+const mockRequest = supergoose(server);
 
-// beforeAll(() => {
-//   supergoose.startDB();
-// });
 
-// afterAll(()=> {
-//   supergoose.stopDB();
-// });
-
-// Server Start
-
-// describe('This should start our server and connect to the DB', () => {
-//   it('should respond with a console log', ()=> {
-//     server.start(3000);
-//     expect(console.log).toHaveBeenCalled();
-//   });
-// });
 
 describe('testing the server', () => {
-  it('expect slash to be not found', async (done) => {
-    const response = await request.get('/');
-    expect(response.status).toBe(200);
-    done();
+  it('Expect connection to home route', () => {
+    return mockRequest.get('/')
+    .then((res) => {
+      expect(res.status).toBe(200)
+    });
+  });
+},
+);
+
+describe('testing the server', () => {
+  it('Expect application to connect to resources DB', () => {
+    return mockRequest.get('/api/resource')
+    .then((res) => {
+      expect(res.status).toBe(200);
+    });
+  });
+},
+);
+
+describe('testing the server', () => {
+  it('Expect new resource to be successfully added to DB', () => {
+    return mockRequest.post('/api/resource')
+    .then((res) => {
+      expect(res.status).toBe(200);
+    });
   });
 },
 );
