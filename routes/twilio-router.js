@@ -12,6 +12,9 @@ const MessagingResponse = require('twilio').twiml.MessagingResponse;
 router.use(urlencoded({ extended: false}));
 const UserModel = require('../middleware/models/user/user-model.js');
 const user = new UserModel();
+const ResourceModel = require('../middleware/models/resource/resource-model.js');
+const resource = new ResourceModel();
+
 
 router.post('/', handleText);
 
@@ -21,9 +24,20 @@ function handleText(req, res) {
 
 
   if (command.toLowerCase() === 'signup') {
-    twiml.message('Thanks for signing up');
     let userDetails = {phoneNumber: req.body.From};
-    user.create(userDetails);
+    user.create(userDetails)
+    resource.getOne()
+    .then(result => {
+      let action = result.url;
+      console.log('this is the action:', action);
+      return action;
+    })
+    twiml.message('Thanks for signing up');
+   
+  
+    // twiml.message(`Thanks for signing up. Here\'s your first action: ${action}. Respond with DONE when you\'ve completed it.`);
+  
+    
     // console.log(req.body);
   }
 
@@ -38,5 +52,7 @@ function handleText(req, res) {
   res.writeHead(200, {'Content-Type': 'text/xml'});
   res.end(twiml.toString());
 };
+
+
 
 module.exports = router;

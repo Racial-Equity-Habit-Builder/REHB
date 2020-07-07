@@ -24,6 +24,16 @@ class MongoInterface {
       .catch(e => console.log(e));
   }
 
+  getOne() {
+    return this.schema.findOne()
+      .then(result => {
+        console.log('result', result);
+        return result;
+      })
+      .catch(e => console.log(e));
+
+  }
+
   getByName(username) {
     let searchParam = username ? { username } : {};
     return this.schema.find(searchParam)
