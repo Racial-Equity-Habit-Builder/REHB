@@ -22,4 +22,4 @@ class Users extends Model {
 
 }
 
-module.exports = Resource;
+module.exports = Users;
