@@ -15,27 +15,41 @@ class Resource extends Model {
         this.preferences = [];
         this.settings = [];
     }
+    incrementStreak(_id){
+        let update = {streak: 1}; 
+        const opts = {new : true};
+        this.schema.findOneAndUpdate(_id, update, opts);
+    }
     // TODO: Class method that, upon confirmation from twilio, updates the user's streak +1 or resets to zero
-    incrementStreak(data) {
+    actionTaken(data) {
         if(data) {
-            this.streak++;
+            incrementStreak(_id); // what we pass in is TBD, but this should 
         } else {
-            this.streak = 0;
+            resetStreak(_id);
         }
     }
-
-    complete(data) {
-        this.completed.push(data.id)
-    }
     // TODO: need a method that will push a completed resource ID into the users completed array.
-    checkCompleted(data) { 
-        this.completed.forEach(id => {
-            if(data.id === id) {
-                checkCompleted;
+    complete(data) {
+        let finishedTask = this.schema.get(data.id);
+        this.completed.push(finishedTask);
+    }
+
+    // TODO: functionality to make sure user doesn't repeat tasks
+    checkCompleted(data) {
+        let finishedTask = this.schema.get();
+        finishedTask.results.forEach(value => {
+            if(value._id === _id) {
+                return true;
             } else {
                 return false;
             }
         })
+    }
+    // Method to reset to streak if user fails
+    resetStreak(_id) {
+        let update = {streak : 0};
+        const opts = {new : true};
+        this.schema.findOneAndUpdate(_id, update, opts);
     }
 }
 

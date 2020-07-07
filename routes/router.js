@@ -17,7 +17,7 @@ router.post('/:model', addOne);
 router.get('/:model', getAll);
 router.get('/:model/:id', getOne);
 router.put('/:model/:id',  updateOne);
-router.put('/:model/twilio:id',  updateStreak);
+// router.put('/:model/twilio:id', updateStreak);
 router.delete('/:model/:id',  deleteOne);
 
 /**
