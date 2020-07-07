@@ -23,22 +23,21 @@ class Users extends Model {
     // TODO: Class method that, upon confirmation from twilio, updates the user's streak +1 or resets to zero
     actionTaken(data) {
         if(data) {
-            incrementStreak(_id); // what we pass in is TBD, but this should 
+            incrementStreak(data._id); // what we pass in is TBD, but this should 
         } else {
-            resetStreak(_id);
+            resetStreak(data._id);
         }
     }
     // TODO: need a method that will push a completed resource ID into the users completed array.
     complete(data) {
-        let finishedTask = this.schema.get(data.id);
+        let finishedTask = this.schema.get(data._id);
         this.completed.push(finishedTask);
     }
-
     // TODO: functionality to make sure user doesn't repeat tasks
     checkCompleted(data) {
-        let finishedTask = this.schema.get();
-        finishedTask.results.forEach(value => {
-            if(value._id === _id) {
+        let taskList = this.schema.get();
+        taskList.results.forEach(task => {
+            if(task._id === data._id) {
                 return true;
             } else {
                 return false;
