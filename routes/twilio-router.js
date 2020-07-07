@@ -29,7 +29,7 @@ async function handleText(req, res) {
     twiml.message('Thanks for signing up');
 
     let action = await resource.getOne()
-      console.log('this is the action.url:', action.url);
+    console.log('this is the action.url:', action.url);
     twiml.message(action.url);
   }
 
