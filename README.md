@@ -2,7 +2,7 @@
 ![logo](public/assets/graphics/REHaB_Icon.png)
 
 
-Group midterm  project for Code Fellows Advancerd Javascript
+Group midterm  project for Code Fellows Advanced Javascript
 
 ## Live deployment
 Check out our app out in the wild [here](https://rehab-cf.herokuapp.com/)! 

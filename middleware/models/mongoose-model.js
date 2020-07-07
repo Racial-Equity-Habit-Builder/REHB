@@ -44,6 +44,7 @@ class MongoInterface {
       .catch(e => console.log(e));
   }
 
+
   create(data) {
     let newObject = new this.schema(data);
     return newObject.save(newObject);
@@ -61,6 +62,7 @@ class MongoInterface {
     return this.schema.exists(data);
   }
 
+  
 }
 
 module.exports = MongoInterface;
