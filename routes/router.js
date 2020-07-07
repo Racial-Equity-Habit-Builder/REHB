@@ -72,7 +72,7 @@ function getOne(request, response){
  */
 
 function updateOne(request, response){
-    request.model.update(request.params.id, request.body)
+  request.model.update(request.params.id, request.body)
     .then (results => response.send(request.params.id + ' was updated!'))
     .catch(err => response.send(err));
 

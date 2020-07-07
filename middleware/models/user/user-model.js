@@ -7,7 +7,7 @@
 const schema = require('./user-schema.js');
 const Model = require('../mongoose-model.js');
 
-class Users extends Model {
+class User extends Model {
     constructor() {
         super(schema);
         this.streak = 0;
