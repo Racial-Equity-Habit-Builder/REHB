@@ -12,12 +12,14 @@ const getModel = require('../middleware/getModel');
 
 router.param('model', getModel);
 
-
 router.post('/:model', addOne);
 router.get('/:model', getAll);
 router.get('/:model/:id', getOne);
 router.put('/:model/:id',  updateOne);
 router.delete('/:model/:id',  deleteOne);
+
+const UserModel = require('../middleware/models/user/user-model.js');
+const user = new UserModel();
 
 /**
  * addOne - adds one thing to the database
@@ -27,11 +29,11 @@ router.delete('/:model/:id',  deleteOne);
  * @returns {object}
  */
 
-
-function addOne(request, response){
-  request.model.create(request.body)
-    .then (results => response.send(results))
-    .catch(err => response.send(err));
+function addOne(request, response) {
+  let userDetails = ({ role: request.body.role, phoneNumber: request.body.phoneNumber })
+  user.create(userDetails);
+  console.log('new user added', userDetails);
+  response.send('new profile added');
 }
 
 /**
