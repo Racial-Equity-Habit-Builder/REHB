@@ -7,6 +7,7 @@
 const schema = require('./user-schema.js');
 const Model = require('../mongoose-model.js');
 
+
 class Users extends Model {
   constructor() {
     super(schema);
@@ -39,6 +40,7 @@ class Users extends Model {
   complete(data) {
     let finishedTask = this.schema.get(data._id);
     this.completed.push(finishedTask._id);
+
   }
 }
 
