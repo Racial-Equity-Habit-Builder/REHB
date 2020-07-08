@@ -1,6 +1,5 @@
 'use strict';
 
-
 /**
  * Mongo Interface class
  * @module MongoInterface
@@ -24,15 +23,6 @@ class MongoInterface {
       .catch(e => console.log(e));
   }
 
-  // getOne() {
-  //   return this.schema.findOne()
-  //     .then(result => {
-  //       console.log('result', result);
-  //       return result;
-  //     })
-  //     .catch(e => console.log(e));
-  // }
-
   getByName(username) {
     let searchParam = username ? { username } : {};
     return this.schema.find(searchParam)
@@ -43,7 +33,6 @@ class MongoInterface {
       .catch(e => console.log(e));
   }
 
-
   create(data) {
     let newObject = new this.schema(data);
     return newObject.save(newObject);
@@ -53,6 +42,14 @@ class MongoInterface {
     return this.schema.findByIdAndUpdate(_id, data);
   }
 
+  deleteUser(phoneNumber) {
+    console.log('from mongoose-model', phoneNumber);
+    console.log(typeof phoneNumber);
+    //TODO: how to successfully interact and delete document from mongoatlas using ... mongoose
+    let payload = { phoneNumber : phoneNumber };
+    this.schema.remove({});
+  }
+
   delete(_id) {
     return this.schema.findByIdAndDelete(_id);
   }
@@ -60,8 +57,6 @@ class MongoInterface {
   exists(data){
     return this.schema.exists(data);
   }
-
-  
 }
 
 module.exports = MongoInterface;
