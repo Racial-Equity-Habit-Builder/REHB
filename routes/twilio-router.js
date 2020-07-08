@@ -28,7 +28,7 @@ async function handleText(req, res) {
     user.create(userDetails)
     twiml.message('Thanks for signing up');
 
-    let action = await resource.getRandom()
+    let action = await resource.getRandom();
     console.log('this is the action.url:', action.url);
     twiml.message(action.url);
   }
@@ -43,6 +43,9 @@ async function handleText(req, res) {
 
   res.writeHead(200, { 'Content-Type': 'text/xml' });
   res.end(twiml.toString());
-};
+}
 
-module.exports = router;
+module.exports = {
+  router,
+  handleText,
+};
