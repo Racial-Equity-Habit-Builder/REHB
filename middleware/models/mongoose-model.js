@@ -1,6 +1,5 @@
 'use strict';
 
-
 /**
  * Mongo Interface class
  * @module MongoInterface
@@ -43,6 +42,14 @@ class MongoInterface {
     return this.schema.findByIdAndUpdate(_id, data);
   }
 
+  deleteUser(phoneNumber) {
+    console.log('from mongoose-model', phoneNumber);
+    console.log(typeof phoneNumber);
+    //TODO: how to successfully interact and delete document from mongoatlas using ... mongoose
+    let payload = { phoneNumber : phoneNumber };
+    this.schema.remove({});
+  }
+
   delete(_id) {
     return this.schema.findByIdAndDelete(_id);
   }
@@ -50,7 +57,6 @@ class MongoInterface {
   exists(data){
     return this.schema.exists(data);
   }
-
 }
 
 module.exports = MongoInterface;
