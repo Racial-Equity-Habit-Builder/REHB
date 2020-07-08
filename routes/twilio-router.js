@@ -60,9 +60,14 @@ async function handleText(req, res) {
 
   res.writeHead(200, { 'Content-Type': 'text/xml' });
   res.end(twiml.toString());
+}
+
+
+module.exports = {
+  router,
+  handleText,
 };
 
-module.exports = router;
 
   // LOCALHOST
   // twilio phone-numbers:update "+12062228429" --sms-url="http://localhost:3000/sms"
@@ -70,3 +75,4 @@ module.exports = router;
 
   // ON HEROKU
   // twilio phone-numbers:update "+12062228429" --sms-url="https://rehab-cf.herokuapp.com/sms"
+
