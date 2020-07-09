@@ -35,12 +35,13 @@ async function handleText(req, res) {
     let current = await user.exists(userDetails);
     if(current === false) {
       await user.create(userDetails);
-      twiml.message('Thanks for signing up');
+      twiml.message('Thanks for signing up!');
+      twiml.message('Share on twitter: ‘https://twitter.com/intent/tweet?text=Starting%20the%2021-Day%20Challenge!%20https://debbyirving.com/21-day-challenge/’');
   
       let action = await resource.getRandom();
   
       console.log('this is the action.url:', action.url);
-      twiml.message(action.url);
+      twiml.message(`Get started with your first action: ${action.url}`);
       await user.complete(req.body.From, action._id);
       
       
@@ -60,11 +61,19 @@ async function handleText(req, res) {
     today = Math.floor((today/1000)/60);//turning into minutes
     let success = await user.dateCheck(today, req.body.From);
     if (success) {
-      twiml.message('Great job');
-      user.incrementStreak({ phoneNumber: req.body.From });
+      await user.incrementStreak({ phoneNumber: req.body.From });
+      let streak = await user.getStreak(req.body.From);
+      if (streak === 21) {
+        twiml.message('Congratulations! You\'ve completed the 21 day habit challenge!');
+        twiml.message('Share on twitter: ‘https://twitter.com/intent/tweet?text=I%20completed%20the%2021-Day%20Challenge!%20https://debbyirving.com/21-day-challenge/’');
+      }
+      if (streak != 21){
+        twiml.message(`Great job! Your current streak is ${streak} days. Keep it going.`);
+      }
     }else {
       twiml.message('You missed a day so your streak starts over.');
       user.resetStreak({ phoneNumber: req.body.From });
+      user.resetCompleted({ phoneNumber: req.body.From });
     }
   }
 

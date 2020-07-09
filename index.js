@@ -10,6 +10,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const server = require('./lib/server.js');
+const sendDailyAction = require('./lib/send_sms.js');
 
 
 // ENVIRONMENTAL VARIABLES
@@ -31,3 +32,6 @@ db.on('open', () => {
 
 // STARTING SERVER
 server.start(PORT);
+
+// SEND DAILY ACTION
+sendDailyAction();
