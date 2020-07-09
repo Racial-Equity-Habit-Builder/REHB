@@ -9,14 +9,16 @@ const express = require('express');
 const router = express.Router();
 
 const getModel = require('../middleware/getModel');
+const permissions = require('../middleware/acl.js');
+const basicAuth = require('../middleware/basic.js');
 
 router.param('model', getModel);
 
 router.post('/:model', addOne);
 router.get('/:model', getAll);
 router.get('/:model/:id', getOne);
-router.put('/:model/:id',  updateOne);
-router.delete('/:model/:id',  deleteOne);
+router.put('/:model/:id', updateOne);
+router.delete('/:model/:id', basicAuth, /* permissions('delete'), */ deleteOne);
 
 const UserModel = require('../middleware/models/user/user-model.js');
 const user = new UserModel();

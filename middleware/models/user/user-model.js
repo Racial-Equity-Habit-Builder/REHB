@@ -13,6 +13,8 @@ class Users extends Model {
     super(schema);
 
   }
+  // for basic auth
+  setRole(role) { this.role = role };
 
   //TODO: Get these working in just the way we need them to work
   
