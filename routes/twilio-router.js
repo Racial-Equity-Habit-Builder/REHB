@@ -26,6 +26,7 @@ async function handleText(req, res) {
   if (command.toLowerCase() === 'signup') {
     let userDetails = { phoneNumber: req.body.From };
     user.create(userDetails)
+    console.log(user.create(userDetails))
     twiml.message('Thanks for signing up');
 
     let action = await resource.getRandom();
