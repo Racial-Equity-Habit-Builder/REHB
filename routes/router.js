@@ -9,15 +9,20 @@ const express = require('express');
 const router = express.Router();
 
 const getModel = require('../middleware/getModel');
+const permissions = require('../middleware/acl.js');
+const basicAuth = require('../middleware/basic.js');
 
 router.param('model', getModel);
 
-
-router.post('/:model', addOne);
+router.post('/:model', basicAuth, addOne);
 router.get('/:model', getAll);
 router.get('/:model/:id', getOne);
-router.put('/:model/:id',  updateOne);
-router.delete('/:model/:id',  deleteOne);
+router.put('/:model/:id', basicAuth, updateOne);
+router.delete('/:model/:id', basicAuth, /* permissions('delete'), */ deleteOne);
+
+//Using this for addOne that adds a user to the db from the swagger / inspector
+const UserModel = require('../middleware/models/user/user-model.js');
+const user = new UserModel();
 
 /**
  * addOne - adds one thing to the database
@@ -27,6 +32,14 @@ router.delete('/:model/:id',  deleteOne);
  * @returns {object}
  */
 
+ // TODO: This function below adds users, the addOne following will add resources. Neither function seems to do both users and resources
+
+// function addOne(request, response) {
+//   let userDetails = ({ role: request.body.role, phoneNumber: request.body.phoneNumber })
+//   user.create(userDetails);
+//   console.log('new user added', userDetails);
+//   response.send('new profile added');
+// }
 
 function addOne(request, response){
   request.model.create(request.body)
