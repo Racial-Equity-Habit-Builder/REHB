@@ -8,7 +8,9 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  phoneNumber: {type: Number, required: true},
+  username: { type: String },
+  password: { type: String },
+  phoneNumber: {type: String, required: true},
   role: {type: String, default: 'user'},
   streak: {type : Number, default: 0},
   completed: {type: Array, default: []},
