@@ -11,21 +11,31 @@
 require('dotenv').config();
 const base64 = require('base-64');
 const UserModel = require('../middleware/models/user/user-model.js');
-
+let schema = require('./models/user/user-schema.js');
+const user = new UserModel();
 const ADMIN_SECRET = process.env.ADMIN_SECRET;
 
 module.exports = async function basicAuth(req, res, next) {
-  // Consider: Add if {} here to catch error ifnothign in headers
-  let [authType, authString] = req.headers.authentication.split(' ');
-  let password = base64.decode(authString);
-
-  // let [username, password] = base64.decode(authString).split(':');
+ 
+  let [authType, authString] = req.headers.authorization.split(' ');
   
-  console.log(authString);
-  if (password === ADMIN_SECRET) {
-    next();
-  } else {
-    next('Permission Denied');
-  }
-  return 0;
+  let [phone, role] = base64.decode(authString).split(':');
+  
+  let payload = { phoneNumber : phone };
+  
+   user.schema.findOne(payload, function(err, Obj) {
+    
+    let newUser = Obj;
+    
+    console.log('user', newUser);
+    
+    if (newUser.role === 'admin') {
+      next();
+    } else {
+      next('Permission Denied');
+    }
+    return 0;
+});
+
+ 
 }
