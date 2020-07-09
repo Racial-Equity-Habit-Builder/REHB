@@ -31,6 +31,7 @@ async function handleText(req, res) {
 
   if (command.toLowerCase() === 'signup') {
     let userDetails = { phoneNumber: req.body.From };
+
     let current = await user.exists(userDetails);
     if(current === false) {
       await user.create(userDetails);
@@ -49,6 +50,7 @@ async function handleText(req, res) {
       console.log('already signed up');
       twiml.message('you are already signed up');
     }       
+
   }
   
 
