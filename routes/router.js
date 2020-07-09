@@ -18,9 +18,8 @@ router.post('/:model', basicAuth, addOne);
 router.get('/:model', getAll);
 router.get('/:model/:id', getOne);
 router.put('/:model/:id', basicAuth, updateOne);
-router.delete('/:model/:id', basicAuth, /* permissions('delete'), */ deleteOne);
+router.delete('/:model/:id', basicAuth,/* permissions('delete'), */ deleteOne);
 
-//Using this for addOne that adds a user to the db from the swagger / inspector
 const UserModel = require('../middleware/models/user/user-model.js');
 const user = new UserModel();
 
@@ -32,7 +31,8 @@ const user = new UserModel();
  * @returns {object}
  */
 
- // TODO: This function below adds users, the addOne following will add resources. Neither function seems to do both users and resources
+// TODO: This function below adds users, the addOne following will add resources. Neither function seems to do both users and resources
+//Using this for addOne that adds a user to the db from the swagger / inspector
 
 // function addOne(request, response) {
 //   let userDetails = ({ role: request.body.role, phoneNumber: request.body.phoneNumber })
