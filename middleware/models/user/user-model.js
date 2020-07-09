@@ -13,19 +13,19 @@ class Users extends Model {
     super(schema);
 
   }
+  // for basic auth
+  setRole(role) { this.role = role };
 
   //TODO: Get these working in just the way we need them to work
   
-  incrementStreak(_id){
+  incrementStreak(number){
     let update = {$inc: {streak: 1}}; 
-    const opts = {new : true};
-    this.schema.findOneAndUpdate(_id, update, opts);
+    this.schema.findOneAndUpdate(number, update, function(err, Obj) {console.log(Obj);});
   }
 
-  resetStreak(_id){
-    let update = {$set: {streak: 0}}; 
-    const opts = {new : true};
-    this.schema.findOneAndUpdate(_id, update, opts);
+  resetStreak(number){
+    let update = {$set: {streak: 1}}; 
+    this.schema.findOneAndUpdate(number, update, function(err, Obj) {console.log(Obj);});
   }
   
   //FIXME: might not need this
@@ -37,10 +37,25 @@ class Users extends Model {
     }
   }
 
-  complete(data) {
-    let finishedTask = this.schema.get(data._id);
-    this.completed.push(finishedTask._id);
+  complete(number, action) {
+    let payload = { phoneNumber : number };
+    let date = new Date().getTime();
+    date = Math.floor((date/1000)/60);//turning into minutes
+    let update = { $push: { "completed": action }, $set:{"lastActionTime": date}}; 
+    this.schema.findOneAndUpdate(payload, update, function(err, Obj) {console.log(Obj);});
+  }
 
+  async dateCheck(date, number){
+    let payload = { phoneNumber : number };
+    let current = await this.schema.findOne(payload, function(err, Obj) {console.log(Obj);});
+    console.log('this is current: ', current);
+    
+    let timePassed = date - current.lastActionTime;
+    console.log('time passed: ', timePassed);
+    if (timePassed < 1440) {//1440 is 24 hours
+      return true;
+    }
+    return false;
   }
 }
 

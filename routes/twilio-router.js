@@ -22,39 +22,59 @@ router.post('/', handleText);
 async function handleText(req, res) {
   const twiml = new MessagingResponse();
   let command = req.body.Body;
+  // let timer = cron.schedule(
+  //   '* * * * *', ()=> {
+  //     console.log('timer stuff is happening')
+  //   }, {scheduled: false}
+  // );
+  
 
   if (command.toLowerCase() === 'signup') {
     let userDetails = { phoneNumber: req.body.From };
-    user.create(userDetails)
-    twiml.message('Thanks for signing up');
 
-    let action = await resource.getRandom();
+    let current = await user.exists(userDetails);
+    if(current === false) {
+      await user.create(userDetails);
+      twiml.message('Thanks for signing up');
+  
+      let action = await resource.getRandom();
+  
+      console.log('this is the action.url:', action.url);
+      twiml.message(action.url);
+      await user.complete(req.body.From, action._id);
+      
+      
+      
+      
+    }else {
+      console.log('already signed up');
+      twiml.message('you are already signed up');
+    }       
 
-    console.log('this is the action.url:', action.url);
-    twiml.message(action.url);
   }
+  
 
   if (command.toLowerCase() === 'done') {
-    // get the user by phoneNumber, and get the _id
-    let userDetails = { phoneNumber: req.body.From };
-    // let currentUser = UserModel.findOne(userDetails);
-    console.log(userDetails);
-    //TODO: how to access one user by phonenumber, then use the _id to update the document
-    // increment streak, checking 24 hour timeline
-      // TODO:  user.incrementStreak();
-    // check against the content you specifically completed??
-    // 
-    twiml.message('Great job');
+       
+    let today = new Date().getTime();
+    today = Math.floor((today/1000)/60);//turning into minutes
+    let success = await user.dateCheck(today, req.body.From);
+    if (success) {
+      twiml.message('Great job');
+      user.incrementStreak({ phoneNumber: req.body.From });
+    }else {
+      twiml.message('You missed a day so your streak starts over.');
+      user.resetStreak({ phoneNumber: req.body.From });
+    }
   }
 
   if (command.toLowerCase() === 'options') {
-    twiml.message('The options are SIGNUP, DONE, OPTIONS, ALLDONE, and STOP.');
+    twiml.message('The options are SIGNUP, DONE, OPTIONS, and LEAVE.');
   }
 
-  if (command.toLowerCase() === 'apples') {
+  if (command.toLowerCase() === 'leave') {
     let phoneNumber = req.body.From;
-    user.deleteUser(phoneNumber); 
-    //TODO: be able to actually delete a user
+    await user.deleteUser(phoneNumber); 
     twiml.message('We will miss you! Text \'signup\' anytime to start again');
   }
 
