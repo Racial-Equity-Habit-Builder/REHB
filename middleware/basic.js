@@ -3,29 +3,32 @@
 /**
  * Basic Auth Middleware
  * @module basic-auth
- * @function authMiddleware Authenticates user based on hashed password 
- * @param {Object} req Passed in from request 
+ * @function basicAuth Authenticates user based on hashed phone number and role
+ * @param {String}  req.headers.authorization 
  * @next  Passes through if user is authenticated
  */
+// const permissionDenied = Ashley;
 
-require('dotenv').config();
 const base64 = require('base-64');
 const UserModel = require('../middleware/models/user/user-model.js');
-
-const ADMIN_SECRET = process.env.ADMIN_SECRET;
+const user = new UserModel();
 
 module.exports = async function basicAuth(req, res, next) {
-  // Consider: Add if {} here to catch error ifnothign in headers
-  let [authType, authString] = req.headers.authentication.split(' ');
-  let password = base64.decode(authString);
 
-  // let [username, password] = base64.decode(authString).split(':');
-  
-  console.log(authString);
-  if (password === ADMIN_SECRET) {
-    next();
-  } else {
-    next('Permission Denied');
-  }
-  return 0;
+  let [authType, authString] = req.headers.authorization.split(' ');
+  let [phone, role] = base64.decode(authString).split(':');
+  let payload = { phoneNumber: phone };
+
+  user.schema.findOne(payload, function (err, Obj) {
+    let newUser = Obj;
+
+    // console.log('user', newUser);
+
+    if (newUser.role === 'admin') {
+      next();
+    } else {
+      next('Permission Denied');
+    }
+    return 0;
+  });
 }
