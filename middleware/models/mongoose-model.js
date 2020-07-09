@@ -23,6 +23,7 @@ class MongoInterface {
       .catch(e => console.log(e));
   }
 
+
   getByName(username) {
     let searchParam = username ? { username } : {};
     return this.schema.find(searchParam)
@@ -42,12 +43,9 @@ class MongoInterface {
     return this.schema.findByIdAndUpdate(_id, data);
   }
 
-  deleteUser(phoneNumber) {
-    console.log('from mongoose-model', phoneNumber);
-    console.log(typeof phoneNumber);
-    //TODO: how to successfully interact and delete document from mongoatlas using ... mongoose
-    let payload = { phoneNumber : phoneNumber };
-    this.schema.remove({});
+  deleteUser(number) {
+    let payload = { phoneNumber : number };
+    return this.schema.findOneAndDelete(payload, function(err, Obj) {console.log(Obj);});
   }
 
   delete(_id) {
