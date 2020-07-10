@@ -15,20 +15,15 @@ const user = new UserModel();
 
 module.exports = async function basicAuth(req, res, next) {
 
-  let [authType, authString] = req.headers.authorization.split(' ');
-  let [phone, role] = base64.decode(authString).split(':');
-  let payload = { phoneNumber: phone };
+  let [authType, authString] = req.headers.authentication.split(' ');
+  let password = base64.decode(authString);
 
-  user.schema.findOne(payload, function (err, Obj) {
-    let newUser = Obj;
+  console.log(authString);
+  if (password === ADMIN_SECRET) {
+    next();
+  } else {
+    next('Permission Denied');
+  }
+  return 0;
 
-    // console.log('user', newUser);
-
-    if (newUser.role === 'admin') {
-      next();
-    } else {
-      next('Permission Denied');
-    }
-    return 0;
-  });
 }
