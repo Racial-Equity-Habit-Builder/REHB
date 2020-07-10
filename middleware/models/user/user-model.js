@@ -16,7 +16,6 @@ class Users extends Model {
   // for basic auth
   setRole(role) { this.role = role };
 
-  //TODO: Get these working in just the way we need them to work
   
   incrementStreak(number){
     let update = {$inc: {streak: 1}}; 
@@ -27,15 +26,14 @@ class Users extends Model {
     let update = {$set: {streak: 1}}; 
     this.schema.findOneAndUpdate(number, update, function(err, Obj) {console.log(Obj);});
   }
-  
-  //FIXME: might not need this
-  actionTaken(data) {
-    if(data) {
-      incrementStreak(data._id);
-    } else {
-      resetStreak(data._id);
-    }
+
+  async getStreak(number) {
+    let payload = { phoneNumber : number };
+    let current = await this.schema.findOne(payload, function(err, Obj) {console.log(Obj);});
+    return current.streak;
   }
+  
+  
 
   complete(number, action) {
     let payload = { phoneNumber : number };
@@ -43,6 +41,11 @@ class Users extends Model {
     date = Math.floor((date/1000)/60);//turning into minutes
     let update = { $push: { "completed": action }, $set:{"lastActionTime": date}}; 
     this.schema.findOneAndUpdate(payload, update, function(err, Obj) {console.log(Obj);});
+  }
+
+  resetCompleted(number){
+    let update = {$set: {completed: []}}; 
+    this.schema.findOneAndUpdate(number, update, function(err, Obj) {console.log(Obj);});
   }
 
   async dateCheck(date, number){
