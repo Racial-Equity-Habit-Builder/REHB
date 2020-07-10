@@ -11,6 +11,7 @@ describe('This tests the twilio functionality from the backend', () => {
   it('should return an object with ', () => {
     let req = {};
     const data = router.handleText(req);
+    console.log(data)
     expect(data).resolves.toBe({});
     // expect(spy).toHaveBeenCalledTimes(1)
   });

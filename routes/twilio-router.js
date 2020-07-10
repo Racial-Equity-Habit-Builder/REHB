@@ -16,10 +16,13 @@ const ResourceModel = require('../middleware/models/resource/resource-model.js')
 const { twiml } = require('twilio');
 const resource = new ResourceModel();
 var cron = require('node-cron');
+const { NetworkContext } = require('twilio/lib/rest/supersim/v1/network');
 
 router.post('/', handleText);
 
+
 async function handleText(req, res) {
+  try {
   const twiml = new MessagingResponse();
   let command = req.body.Body;
   // let timer = cron.schedule(
@@ -44,13 +47,27 @@ async function handleText(req, res) {
       twiml.message(`Get started with your first action: ${action.url}`);
       await user.complete(req.body.From, action._id);
       
-      
-      
-      
-    }else {
-      console.log('already signed up');
-      twiml.message('you are already signed up');
-    }       
+      let userDetails = { phoneNumber: req.body.From };
+
+      let current = await user.exists(userDetails);
+      if(current === false) {
+        await user.create(userDetails);
+        twiml.message('Thanks for signing up');
+    
+        let action = await resource.getRandom();
+    
+        console.log('this is the action.url:', action.url);
+        twiml.message(action.url);
+        await user.complete(req.body.From, action._id);
+        
+        
+        
+        
+      }else {
+        console.log('already signed up');
+        twiml.message('you are already signed up');
+      }       
+
 
   }
   
@@ -74,23 +91,27 @@ async function handleText(req, res) {
       twiml.message('You missed a day so your streak starts over.');
       user.resetStreak({ phoneNumber: req.body.From });
       user.resetCompleted({ phoneNumber: req.body.From });
+
     }
-  }
+    
 
-  if (command.toLowerCase() === 'options') {
-    twiml.message('The options are SIGNUP, DONE, OPTIONS, and LEAVE.');
-  }
+    if (command.toLowerCase() === 'options') {
+      twiml.message('The options are SIGNUP, DONE, OPTIONS, and LEAVE.');
+    }
 
-  if (command.toLowerCase() === 'leave') {
-    let phoneNumber = req.body.From;
-    await user.deleteUser(phoneNumber); 
-    twiml.message('We will miss you! Text \'signup\' anytime to start again');
-  }
+    if (command.toLowerCase() === 'leave') {
+      let phoneNumber = req.body.From;
+      await user.deleteUser(phoneNumber); 
+      twiml.message('We will miss you! Text \'signup\' anytime to start again');
+    }
 
-  res.writeHead(200, { 'Content-Type': 'text/xml' });
-  res.end(twiml.toString());
+    res.writeHead(200, { 'Content-Type': 'text/xml' });
+    res.end(twiml.toString());
+  } catch (e) {
+    console.log(e.message)
+    next(e.message)
+  }
 }
-
 
 module.exports = {
   router,
