@@ -63,11 +63,11 @@ async function handleText(req, res) {
     if (success) {
       await user.incrementStreak({ phoneNumber: req.body.From });
       let streak = await user.getStreak(req.body.From);
-      if (streak === 3) {
+      if (streak === 21) {
         twiml.message('Congratulations! You\'ve completed the 21 day habit challenge!');
         twiml.message('Share on twitter: ‘https://twitter.com/intent/tweet?text=I%20completed%20the%2021-Day%20Challenge!%20https://www.eddiemoorejr.com/21daychallenge/’');
       }
-      if (streak != 3){
+      if (streak != 21){
         twiml.message(`Great job! Your current streak is ${streak} days. Keep it going.`);
       }
     }else {
