@@ -19,6 +19,7 @@ router.get('/:model/:id', getOne);
 router.put('/:model/:id', basicAuth, updateOne);
 router.delete('/:model/:id', basicAuth, deleteOne);
 
+
 const UserModel = require('../middleware/models/user/user-model.js');
 const user = new UserModel();
 

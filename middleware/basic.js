@@ -3,18 +3,18 @@
 /**
  * Basic Auth Middleware
  * @module basic-auth
- * @function authMiddleware Authenticates user based on hashed password 
- * @param {Object} req Passed in from request 
+ * @function basicAuth Authenticates user based on hashed phone number and role
+ * @param {String}  req.headers.authorization 
  * @next  Passes through if user is authenticated
  */
+// const permissionDenied = Ashley;
 
-require('dotenv').config();
 const base64 = require('base-64');
 const UserModel = require('../middleware/models/user/user-model.js');
-
-const ADMIN_SECRET = process.env.ADMIN_SECRET;
+const user = new UserModel();
 
 module.exports = async function basicAuth(req, res, next) {
+
   let [authType, authString] = req.headers.authentication.split(' ');
   let password = base64.decode(authString);
 
@@ -25,4 +25,5 @@ module.exports = async function basicAuth(req, res, next) {
     next('Permission Denied');
   }
   return 0;
+
 }

@@ -16,6 +16,7 @@ const ResourceModel = require('../middleware/models/resource/resource-model.js')
 const { twiml } = require('twilio');
 const resource = new ResourceModel();
 var cron = require('node-cron');
+const { NetworkContext } = require('twilio/lib/rest/supersim/v1/network');
 
 router.post('/', handleText);
 
