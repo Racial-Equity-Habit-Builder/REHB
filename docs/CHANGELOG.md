@@ -1,0 +1,114 @@
+- Add files via upload
+- Delete garret_placeholder.jpg
+- Update homePage.ejs
+- Update send_sms.js
+- Update twilio-router.js
+- Update send_sms.js
+- Update homePage.ejs
+- Update twilio-router.js
+- Update send_sms.js
+- Update twilio-router.js
+- Update homePage.ejs
+- Merge pull request #52 from Racial-Equity-Habit-Builder/twilio4
+- added daily message resource to the user completed array
+- finished daily message functionality and tweaked twilio router functionality
+- Merge pull request #44 from Racial-Equity-Habit-Builder/twilio3
+- Merge branch 'staging' into twilio3
+- pushing again since changes weren't there
+- Merge pull request #43 from Racial-Equity-Habit-Builder/nodeChron
+- update
+- david description added
+- Merge pull request #41 from Racial-Equity-Habit-Builder/basic-auth-continued
+- Merge pull request #42 from Racial-Equity-Habit-Builder/twilio3
+- finished twilio route functionality and got send message working - needs fine tuning
+- added the addOne function back in, but commented it out. THere are now 2 functions that are necessary to add a user and other for resources. This will need to be fixed.
+- added more tests to api routes, working on testing middleware
+- authnetication header can validate admin permissions based on one single admin password, hard stored in .env file
+- completed functionality to add a profile to the db through api routes
+- Merge pull request #38 from Racial-Equity-Habit-Builder/staging
+- Merge pull request #37 from Racial-Equity-Habit-Builder/fixes
+- fixed module export issue
+- Update package.json
+- Merge pull request #36 from Racial-Equity-Habit-Builder/staging
+- Merge branch 'master' into staging
+- Merge pull request #34 from Racial-Equity-Habit-Builder/wolfe-tests
+- Merge branch 'staging' into wolfe-tests
+- Merge pull request #35 from Racial-Equity-Habit-Builder/twilio-crub
+- working on mongoose functionality, adding users and referencing resources, but not able to find or delete users via sms communication
+- got the twilio test completed
+- Merge pull request #32 from Racial-Equity-Habit-Builder/twilio2
+- Merge branch 'staging' into twilio2
+- working locally with sending a random resource. Now to test on heroku
+- Update router.js
+- Merge pull request #31 from Racial-Equity-Habit-Builder/revert-30-DavidP-handleStreak
+- Revert "David p handle streak"
+- Merge branch 'staging' of https://github.com/Racial-Equity-Habit-Builder/REHB into nodeChron
+- Merge branch 'staging' of https://github.com/Racial-Equity-Habit-Builder/REHB into twilio2
+- Merge pull request #29 from Racial-Equity-Habit-Builder/tests
+- Merge branch 'staging' into tests
+- Merge pull request #30 from Racial-Equity-Habit-Builder/DavidP-handleStreak
+- Merge branch 'staging' of https://github.com/Racial-Equity-Habit-Builder/REHB into twilio2
+- midday work
+- Merge branch 'staging' of https://github.com/Racial-Equity-Habit-Builder/REHB into nodeChron
+- Merge pull request #28 from Racial-Equity-Habit-Builder/twilio2
+- Merge branch 'staging' of https://github.com/Racial-Equity-Habit-Builder/REHB into twillioCrud
+- Merge branch 'twillioCrud' of https://github.com/Racial-Equity-Habit-Builder/REHB into twillioCrud
+- stashing
+- Added Mongo DB tests
+- successfully sending a resource via twilio to phone user
+- Merge pull request #27 from Racial-Equity-Habit-Builder/twillioCrud
+- Merge branch 'staging' into twillioCrud
+- logic started for getRandom and Incrementer
+- pushing so we can switch drivers
+- Merge pull request #26 from Racial-Equity-Habit-Builder/DavidP-handleStreak
+- Merge branch 'staging' into DavidP-handleStreak
+- started branch for handle the Streak Feature, created methods to handle incoming data object from twilio to track user streak count and id of task they completed
+- started class methods to handle user's streak count and completed resource IDs
+- Merge pull request #24 from Racial-Equity-Habit-Builder/staging
+- Merge pull request #23 from Racial-Equity-Habit-Builder/crud
+- tests added
+- Merge pull request #22 from Racial-Equity-Habit-Builder/twilio
+- able to add a user when someone texts signup to the number
+- Merge branch 'staging' of https://github.com/Racial-Equity-Habit-Builder/REHB into staging
+- Merge pull request #20 from Racial-Equity-Habit-Builder/crud
+- Merge branch 'staging' into crud
+- test sample added
+- Merge pull request #19 from Racial-Equity-Habit-Builder/twilio
+- got twilio connection working
+- Merge branch 'staging' of https://github.com/Racial-Equity-Habit-Builder/REHB into twilio
+- Merge branch 'staging' of https://github.com/Racial-Equity-Habit-Builder/REHB into staging
+- Merge pull request #18 from Racial-Equity-Habit-Builder/crud
+- Merge pull request #17 from Racial-Equity-Habit-Builder/staging
+- Merge pull request #16 from Racial-Equity-Habit-Builder/crud
+- Crud Started, need to fix
+- Merge pull request #15 from Racial-Equity-Habit-Builder/crud
+- CRUD Functions added to server?
+- Merge pull request #14 from Racial-Equity-Habit-Builder/staging
+- Merge pull request #13 from Racial-Equity-Habit-Builder/start-paul
+- readme
+- Merge pull request #12 from Racial-Equity-Habit-Builder/start-paul
+- readme
+- Merge pull request #11 from Racial-Equity-Habit-Builder/start-paul
+- README LINKS fixed
+- Merge pull request #10 from Racial-Equity-Habit-Builder/start-paul
+- added UML
+- Merge pull request #9 from Racial-Equity-Habit-Builder/start-paul
+- random
+- Merge pull request #8 from Racial-Equity-Habit-Builder/master
+- Merge pull request #7 from Racial-Equity-Habit-Builder/start-paul
+- Heroku linked to readme
+- Merge pull request #6 from Racial-Equity-Habit-Builder/start-paul
+- file paths... for photos this time
+- Merge pull request #5 from Racial-Equity-Habit-Builder/start-paul
+- CSS FILE PATHSgit add .git add .
+- Merge pull request #4 from Racial-Equity-Habit-Builder/start-paul
+- css file paths XD
+- Merge pull request #3 from Racial-Equity-Habit-Builder/start-paul
+- css file paths
+- almost there
+- Merge pull request #2 from Racial-Equity-Habit-Builder/start-paul
+- heroku fix?
+- Merge pull request #1 from Racial-Equity-Habit-Builder/start-paul
+- Added README, Server start, Mongo Connection, all packages and project start info, ejs homepage template
+- Initial commit
+(END)    

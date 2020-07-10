@@ -13,9 +13,6 @@ class Users extends Model {
     super(schema);
 
   }
-  // for basic auth
-  setRole(role) { this.role = role };
-
   
   incrementStreak(number){
     let update = {$inc: {streak: 1}}; 
@@ -32,8 +29,6 @@ class Users extends Model {
     let current = await this.schema.findOne(payload, function(err, Obj) {console.log(Obj);});
     return current.streak;
   }
-  
-  
 
   complete(number, action) {
     let payload = { phoneNumber : number };
