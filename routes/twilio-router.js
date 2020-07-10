@@ -22,43 +22,31 @@ router.post('/', handleText);
 async function handleText(req, res) {
   const twiml = new MessagingResponse();
   let command = req.body.Body;
-  // let timer = cron.schedule(
-  //   '* * * * *', ()=> {
-  //     console.log('timer stuff is happening')
-  //   }, {scheduled: false}
-  // );
-  
 
   if (command.toLowerCase() === 'signup') {
     let userDetails = { phoneNumber: req.body.From };
 
     let current = await user.exists(userDetails);
-    if(current === false) {
+    if (current === false) {
       await user.create(userDetails);
       twiml.message('Thanks for signing up!');
       twiml.message('Share on twitter: ‘https://twitter.com/intent/tweet?text=Starting%20the%2021-Day%20Challenge!%20https://www.eddiemoorejr.com/21daychallenge/’');
-  
+
       let action = await resource.getRandom();
-  
-      console.log('this is the action.url:', action.url);
+
       twiml.message(`Get started with your first action: ${action.url}. Text back DONE when you\'ve completed it.`);
       await user.complete(req.body.From, action._id);
-      
-      
-      
-      
-    }else {
-      console.log('already signed up');
+
+    } else {
       twiml.message('you are already signed up');
-    }       
+    }
 
   }
-  
 
   if (command.toLowerCase() === 'done') {
-       
+
     let today = new Date().getTime();
-    today = Math.floor((today/1000)/60);//turning into minutes
+    today = Math.floor((today / 1000) / 60);//turning into minutes
     let success = await user.dateCheck(today, req.body.From);
     if (success) {
       await user.incrementStreak({ phoneNumber: req.body.From });
@@ -67,10 +55,10 @@ async function handleText(req, res) {
         twiml.message('Congratulations! You\'ve completed the 21 day habit challenge!');
         twiml.message('Share on twitter: ‘https://twitter.com/intent/tweet?text=I%20completed%20the%2021-Day%20Challenge!%20https://www.eddiemoorejr.com/21daychallenge/’');
       }
-      if (streak != 21){
+      if (streak != 21) {
         twiml.message(`Great job! Your current streak is ${streak} days. Keep it going.`);
       }
-    }else {
+    } else {
       twiml.message('You missed a day so your streak starts over.');
       user.resetStreak({ phoneNumber: req.body.From });
       user.resetCompleted({ phoneNumber: req.body.From });
@@ -83,7 +71,7 @@ async function handleText(req, res) {
 
   if (command.toLowerCase() === 'leave') {
     let phoneNumber = req.body.From;
-    await user.deleteUser(phoneNumber); 
+    await user.deleteUser(phoneNumber);
     twiml.message('We will miss you! Text \'signup\' anytime to start again');
   }
 
@@ -91,17 +79,7 @@ async function handleText(req, res) {
   res.end(twiml.toString());
 }
 
-
 module.exports = {
   router,
   handleText,
 };
-
-
-  // LOCALHOST
-  // twilio phone-numbers:update "+12062228429" --sms-url="http://localhost:3000/sms"
-
-
-  // ON HEROKU
-  // twilio phone-numbers:update "+12062228429" --sms-url="https://rehab-cf.herokuapp.com/sms"
-

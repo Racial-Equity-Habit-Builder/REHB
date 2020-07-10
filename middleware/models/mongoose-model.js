@@ -23,7 +23,6 @@ class MongoInterface {
       .catch(e => console.log(e));
   }
 
-
   getByName(username) {
     let searchParam = username ? { username } : {};
     return this.schema.find(searchParam)

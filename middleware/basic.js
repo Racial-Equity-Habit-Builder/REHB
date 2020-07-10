@@ -15,12 +15,9 @@ const UserModel = require('../middleware/models/user/user-model.js');
 const ADMIN_SECRET = process.env.ADMIN_SECRET;
 
 module.exports = async function basicAuth(req, res, next) {
-  // Consider: Add if {} here to catch error ifnothign in headers
   let [authType, authString] = req.headers.authentication.split(' ');
   let password = base64.decode(authString);
 
-  // let [username, password] = base64.decode(authString).split(':');
-  
   console.log(authString);
   if (password === ADMIN_SECRET) {
     next();

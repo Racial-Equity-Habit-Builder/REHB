@@ -18,7 +18,6 @@ Check out our app out in the wild [here](https://rehab-cf.herokuapp.com/)!
 - [Change Log](#Change-Log)
 - [Domain Modeling](#Domain-Modeling)
 - [Problem Domain](#Problem-Domain)
-- [User Stories](#User-Stories)
 - [Contributing](#Contributing)
 - [Authors](#Authors)
 - [Acknowledgements](#Acknowledgements)
@@ -44,16 +43,21 @@ It provides you with a variety of resources so you don’t have to find them you
 
 ### What will your product do
 
-- Allow for user profile creation and sign-in
-- etc...
+- User can signup via text message
+- A user can text a command to our number and receive a specified response, based on the command.
+- A user will receive their daily streak
+- A user will receive a daily action to complete
+- A user can share their progress on Twitter
+
+- A dev or admin can manage resources in the database
 
 ### What will the product not do
 
-- etc...
+- A user will not recieve the same daily action during the streak.
 
 ### Minimum Viable Product
 
-- The User can sign up with a user profile (if we can’t use text, then we’ll use email for communication).
+- The User can sign up with a user profile via text
 - Confirm Sign up with user
 - At a certain time each day, the User is sent an action to do utilizing Twillio
 - The User can send back a notice that they have completed their action.
@@ -72,16 +76,6 @@ It provides you with a variety of resources so you don’t have to find them you
 ## Functional requirements
 
 See [Domain Modeling](#Domain-Modeling) section below
-
-## Non-Functional Requirements
-
-### Security
-
-- etc...
-
-### Usability
-
-- etc...
 
 [Return to the top](#Table-of-Contents)
 
@@ -106,17 +100,22 @@ This project is licensed under the free MIT license. As such, if you are interes
         - <ins>**Important!**</ins> Ensure that your `package.json` has `server.js` listed under the `start` parameter!
     - Install these libraries from npm that are used on this project with the `npm install` command on your CLI (more info below):
         - base-64
-        - bcrypt
-        - cf-supergoose
+        - @code-fellows/supergoose
+        - supertest
         - dotenv
         - ejs
         - express
         - jest
         - jsdoc
-        - jsonwebtoken
         - mongoose
+        - node-cron
+        - twilio 
+        - twilio-cli
+        - body-parser
 
 4. You should now have a full copy of this project on your local machine. If you would like to contribute to this project in any way, checkout the [Contributing](#Contributing) section below! 
+
+5. Sign up for a Twilio account as listed on the Twilio website. Follow the [Twilio documentation](https://www.twilio.com/docs/sms/quickstart/node) 
 
 [Return to the top](#Table-of-Contents)
 
@@ -127,30 +126,242 @@ This project is licensed under the free MIT license. As such, if you are interes
 - [HTML](https://html.spec.whatwg.org/multipage/) - A standard markup language used for web site structure.
 - [CSS](https://www.w3.org/Style/CSS/Overview.en.html) - A simple language used to add styling to web documents.
 - [JavaScript](http://es6-features.org/#Constants) - A dynamically typed programming language used heavily in front-end development.
-- [jQuery](https://jquery.com/) - A fast, small JavaScript library that makes tasks like DOM manipulation and event handling much easer. 
 - [Dotenv](https://www.npmjs.com/package/dotenv) - An npm package used to create and load environmental variables from a hidden .env file.
 - [Express](https://expressjs.com/) - A node.js web application framework.
 - [EJS](https://ejs.co/) - A server-side templating language to generate HTML markup with plain JavaScript.
 - [Mongoose](https://www.npmjs.com/package/mongoose) -  Mongoose is an npm package that connects to MongoDB using object modeling, designed to work in an asynchronous environment. 
 - [MongoDB](https://www.mongodb.com/) - MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need. 
 - [Base64](https://www.npmjs.com/package/base-64) Base64 is a robust base64 encoder/decoder 
-- [BCrypt](https://www.npmjs.com/package/bcrypt) A library to help you hash passwords 
-- [CF-Supergoose](https://www.npmjs.com/package/bcrypt) Combines SuperTest and Mongoose Memory Server to reduce (hopefully) the pain of testing a Mongoose API. Props to John Cokos and JB Tellez for supergoose.
+- [@Code-Fellows/Supergoose](https://www.npmjs.com/package/@code-fellows/supergoose) Combines SuperTest and Mongoose Memory Server to reduce (hopefully) the pain of testing a Mongoose API. Props to John Cokos and JB Tellez for supergoose.
 - [Jest](https://jestjs.io/) Jest is a delightful JavaScript Testing Framework with a focus on simplicity.
 - [JSDoc](https://jsdoc.app/) JSDoc 3 is an API documentation generator for JavaScript, similar to Javadoc or phpDocumentor. You add documentation comments directly to your source code, right alongside the code itself. The JSDoc tool will scan your source code and generate an HTML documentation website for you.
-[JSONWebToken](https://jwt.io/introduction/) JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. 
+- [Node-cron](https://www.npmjs.com/package/node-cron) The node-cron module is tiny task scheduler in pure JavaScript for node.js based on GNU crontab. This module allows you to schedule task in node.js using full crontab syntax.
 
+- [Twilio](https://www.npmjs.com/package/twilio) The documentation for the Twilio API can be found here. The Node library documentation can be found here.
+
+- [Twilio CLI](https://www.npmjs.com/package/twilio-cli) Unleash the power of Twilio from your command prompt.
+
+- [Body Parser](https://www.npmjs.com/package/body-parser) Node.js body parsing middleware. Parse incoming request bodies in a middleware before your handlers, available under the req.body property.
+
+- [Supertest](https://www.npmjs.com/package/supertest) The motivation with this module is to provide a high-level abstraction for testing HTTP, while still allowing you to drop down to the lower-level API provided by superagent.
 
 
 
 ### APIs
-- Custom Racial Equity: Explain....
+- ## API ROUTES 
+
+### User Route
+
+#### GET https://rehab-cf.herokuapp.com/api/user
+
+* Provides all the current users along with their attributes, in JSON format, that currently exist on our platform.
+
+This route will require an authorization header that needs to include the phoneNumber:role of the user. This crud operation is limited to the admin role, which ensures that user data, such as their phone number, is protected.
+
+It also provides the hosting individual with a snapshot of the current user base, a nice way to gauge how popular the app is getting.
+
+* Example Response Body :
+
+```
+
+{
+    "count": 3,
+    "results": [
+        {
+            "role": "admin",
+            "streak": 1,
+            "completed": [],
+            "preferences": [],
+            "settings": [],
+            "lastActionTime": null,
+            "_id": "5f079bedae09570017a7a77b",
+            "phoneNumber": "+1##########",
+            "__v": 0
+        },
+        {
+            "role": "user",
+            "streak": 0,
+            "completed": [],
+            "preferences": [],
+            "settings": [],
+            "lastActionTime": null,
+            "_id": "5f07a0541b0daa0f1910cbfe",
+            "phoneNumber": "+1##########",
+            "__v": 0
+        },
+        {
+            "role": "user",
+            "streak": 9,
+            "completed": [
+                "5f038b9804b3f10017b1ac0e"
+            ],
+            "preferences": [],
+            "settings": [],
+            "lastActionTime": 26572278,
+            "_id": "5f07a5c7805f4f00176515a8",
+            "phoneNumber": "+1##########",
+            "__v": 0
+        }
+    ]
+}
+
+```
+
+#### POST https://rehab-cf.herokuapp.com/api/user
+
+* Sample request:
+{"phoneNumber": "+1##########", "role": "user"}
+
+This route will create a new user by providing a phoneNumber and assigned role, in the body of the request. Creating a new user is required to begin sending daily tasks and keep track of progress.
+
+* Example User in JSON format:
+
+```
+
+{
+    "role": "user",
+    "streak": 0,
+    "completed": [],
+    "preferences": [],
+    "settings": [],
+    "lastActionTime": null,
+    "_id": "5f07a0541b0daa0f1910cbfe",
+    "phoneNumber": "+155555555",
+    "__v": 0
+}
+
+```
+
+#### DELETE https://rehab-cf.herokuapp.com/api/user/:id
+
+###### Required Data:
+
+* Authorization header: {"phoneNumber": "+1##########", "role": "admin"}
+* Then the admin identifies the user to be deleted by the user's phone number.
+
+This route will require an authorization header that needs to include the phone number and the role of admin. This operation deletes a user manually.
+
+* Example response:
+
+```
+
+{ id ################# was deleted. }
+
+```
+
+### Resource Route
+
+#### GET https://rehab-cf.herokuapp.com/api/resource
+
+* Gets all the active content stored in the database, currently used for the 21-Day-Challenge.
+
+* Example response object in JSON format:
+
+```
+
+{
+    "count": 3,
+    "results": [
+        {
+            "url": "www.eddiemoorejr.com",
+            "type": "read",
+            "keywords": ["informative", "inspiring", "etc"]
+        },
+        {
+            "url": "www.eddiemoorejr.com",
+            "type": "read",
+            "keywords": ["informative", "inspiring", "etc"]
+        }
+    ]
+}
+
+```
+
+#### POST https://rehab-cf.herokuapp.com/api/resource
+
+* Allows the admin to add more content for users to explore during the 21 day challenge. This will add one or more resources in JSON format to the resource pool in the database.
+
+* Sample Request:
+
+```
+
+{
+    "url": "www.eddiemoorejr.com",
+    "type": "read",
+    "keywords": ["informative"],
+}
+
+```
+
+* Example Response:
+
+```
+
+{
+    "url": "www.eddiemoorejr.com",
+    "type": "read",
+    "keywords": ["informative"],
+}
+
+```
+
+#### DELETE https://rehab-cf.herokuapp.com/api/resource/:id
+
+###### Required Data:
+
+* _id of the resource to be deleted.
+
+This route will require an authorization header that needs to include the {"phoneNumber:admin"}. Allows you to delete a specific resource should it become irrelevant to the challenge.
+
+* Example response:
+
+```
+
+{ you have deleted :id }
+
+```
+
+### Twilio Routes
+
+#### POST https://rehab-cf.herokuapp.com/sms
+
+* Example response from twilio in JSON Format:
+
+```
+
+{
+    "account_sid": "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "api_version": "2010-04-01",
+    "body": "This is the ship that made the Kessel Run in fourteen parsecs?",
+    "date_created": "Thu, 30 Jul 2015 20:12:31 +0000",
+    "date_sent": "Thu, 30 Jul 2015 20:12:33 +0000",
+    "date_updated": "Thu, 30 Jul 2015 20:12:33 +0000",
+    "direction": "outbound-api",
+    "error_code": null,
+    "error_message": null,
+    "from": "+15017122661",
+    "messaging_service_sid": "MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "num_media": "0",
+    "num_segments": "1",
+    "price": null,
+    "price_unit": null,
+    "sid": "SMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "status": "sent",
+    "subresource_uris": {
+        "media": "/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Messages/SMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Media.json"
+    },
+    "to": "+15558675310",
+    "uri": "/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Messages/SMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json"
+}
+
+```
+
 ### Custom Fonts
 - [Google Fonts](https://fonts.google.com/)
   - Oswald (Regular)
   - Montserrat (Regular)
 ### Links 
-[Debbie Irving's 21 Day Racial Equity Habit Building Challenge](https://debbyirving.com/21-day-challenge/)
+[Dr. Eddie Moore Jr.'s 21 Day Racial Equity Habit Building Challenge](https://www.eddiemoorejr.com/21daychallenge)
 
 [Return to the top](#Table-of-Contents)
 
@@ -158,7 +369,7 @@ This project is licensed under the free MIT license. As such, if you are interes
 
 ## Change Log
 
-See the attached [CHANGELOG.md](INSERT HERE) file.
+See the attached [CHANGELOG.md](./CHANGELOG.md) file.
 
 [Return to the top](#Table-of-Contents)
 
@@ -184,7 +395,7 @@ This diagram is a visual representation of the data structure for this project.
 
 These are the features we wanted at the start of this project. 
 
-1. The User can sign up with a user profile (if we can’t use text, then we’ll use email for communication).
+1. The User can sign up with a user profile 
 2. Confirm Sign up with user
 3. At a certain time each day, the User is sent an action to do utilizing Twillio
 4. The User can send back a notice that they have completed their action.
@@ -200,16 +411,7 @@ These are the features we wanted at the start of this project.
 
 <hr>
 
-## User Stories:
-
-1. ### User Profiles
-- WRITE THESE!
-
-
-
-### Other Stretch Goals:
-
-Possible future implementation of:
+### Possible future implementation of:
 
 - The User can set preferences regarding the content they want to get. (Time, Category, Duration)
 - Weighted Choices
@@ -217,8 +419,6 @@ Possible future implementation of:
 - OAuth Through Facebook
 - The User can get their history in a Google Sheet.
 - The User can save a reflection/note about the action they completed.
-- The User can text “help” to get a list of available commands.
-
 
 [Return to the top](#Table-of-Contents)
 
@@ -237,10 +437,10 @@ If you would like to contribute to this project, open up an issue on the project
 
 ## Authors
 
-* Dave Wolf - Full-stack Javascript Developer [GitHub](https://github.com/d-d-wolfe)
+* Dave Wolfe - Full-stack Javascript Developer [GitHub](https://github.com/d-d-wolfe)
 * David Palagashvili - Full-stack Javascript Developer [GitHub](https://github.com/Davidoffili)
 * Paul Depew - Full-stack Javascript Developer [GitHub](https://github.com/PaulDepew)
-* Marlene Rinkler - Full-stack Javascript Developer [GitHub](https://github.com/https://github.com/marlene-rinker)
+* Marlene Rinker - Full-stack Javascript Developer [GitHub](https://github.com/https://github.com/marlene-rinker)
 * Garhett Morgan - Full-stack Javascript Developer [GitHub](https://github.com/GarhettM)
 *  Ashley Biermann - Full-stack Javascript Developer [GitHub](https://github.com/ashleybiermann)
 
