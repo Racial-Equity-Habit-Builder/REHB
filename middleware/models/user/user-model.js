@@ -30,14 +30,6 @@ class Users extends Model {
     this.schema.findOneAndUpdate(_id, update, opts);
   }
   
-  //FIXME: might not need this
-  actionTaken(data) {
-    if(data) {
-      incrementStreak(data._id);
-    } else {
-      resetStreak(data._id);
-    }
-  }
 
   complete(data) {
     let finishedTask = this.schema.get(data._id);
