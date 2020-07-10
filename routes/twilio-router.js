@@ -44,7 +44,7 @@ async function handleText(req, res) {
       let action = await resource.getRandom();
   
       console.log('this is the action.url:', action.url);
-      twiml.message(`Get started with your first action: ${action.url}`);
+      twiml.message(`Get started with your first action: ${action.url}. Text back DONE when you\'ve completed it.`);
       await user.complete(req.body.From, action._id);
       
       let userDetails = { phoneNumber: req.body.From };
